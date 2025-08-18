@@ -1,14 +1,16 @@
-import './cabecalho.css'
-import BotaoCabecalho from  '../BotaoCabecalho'
+import './Cabecalho.css'
+import BotaoCabecalho from '../BotaoCabecalho/page'
+import Pesquisa from '../Pesquisa/page'
 const Cabecalho = () => {
     // JSX
     return (
         <header className="cabecalho">
             <div>
-            <img src="/Cabecalho_img/logoescrito.png" alt="Nome da Indietora (sem fundo)"/>
+                
             </div>
+            <Pesquisa></Pesquisa>
             <BotaoCabecalho></BotaoCabecalho>
-       
+
         </header>
     )
 }
