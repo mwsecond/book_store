@@ -1,12 +1,7 @@
 import './Pesquisa.css';
 
 function Pesquisa() {
-  //const scrollToSection = () => {
-  // const section = document.getElementById('livros');
-  // if (section) {
-  //section.scrollIntoView({ behavior: 'smooth' });
-  //}
-  //  };
+
 
   return (
     <div className="pesquisa-container">

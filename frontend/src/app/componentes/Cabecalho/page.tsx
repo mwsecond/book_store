@@ -5,9 +5,7 @@ const Cabecalho = () => {
     // JSX
     return (
         <header className="cabecalho">
-            <div>
-                
-            </div>
+        <img src="./Cabecalho_img/logoescrito.png" alt="" />
             <Pesquisa></Pesquisa>
             <BotaoCabecalho></BotaoCabecalho>
 
