@@ -201,8 +201,8 @@ def get_livros():
     lista_livros = [livro.to_dict() for livro in livros]
     return jsonify(lista_livros)
 
-@app.route('/livros<int:livro_id>', methods=['PUT'])
-def update_livro():
+@app.route('/livros/<int:livro_id>', methods=['PUT'])
+def update_livro(livro_id):
     livro = Livro.query.get_or_404(livro_id)
     dados = request.get_json()
     
@@ -219,6 +219,19 @@ def update_livro():
     db.session.commit()
     
     return jsonify({'message': 'Livro atualizado com sucesso!'}), 201
+
+@app.route('/livros/<int:livro_id>', methods=['DELETE'])
+def delete_livro(livro_id):
+    # Encontra o livro pelo ID. Se não achar, retorna erro 404 (Not Found)
+    livro = Livro.query.get_or_404(livro_id)
+    
+    db.session.delete(livro)
+    
+    # Salva as alterações no banco de dados
+    db.session.commit()
+    
+    return jsonify({'message': 'livro deleteado com sucesso!'})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
