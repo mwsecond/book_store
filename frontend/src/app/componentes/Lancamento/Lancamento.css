@@ -1,0 +1,34 @@
+.cards-container {
+  padding: 20px; /* espaçamento em volta de todos os cards */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* espaço entre os cards */
+}
+
+.card-lancamento{
+     background: linear-gradient(
+        192deg,
+        rgb(34, 80, 137) 0%,
+        rgb(46, 109, 186) 50%,
+        rgb(43, 100, 171) 100%
+    );
+    border-radius: 10px;
+    width: 22%;
+    padding:6px; 
+    
+}
+.card-conteudo{
+    color: white;
+    font-size:larger;
+    font-weight: bold;
+}
+.img-card{
+    background-color: white;
+}
+.titulo{
+     padding: 20px; 
+     display: flex;
+    font-size: 30px;
+    justify-content: center;
+    
+}

@@ -2,11 +2,12 @@ from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 
 
+
 app = Flask(__name__)
 
 
 USER = 'root'
-PASSWORD = '1235' 
+PASSWORD = '' 
 HOST = 'localhost'
 DATABASE = 'book_store'
 
