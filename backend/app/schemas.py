@@ -11,6 +11,7 @@ class AdminSchema(ma.SQLAlchemyAutoSchema):
         load_instance = True  # Opcional: desserializa para um objeto do modelo
         include_fk = True # Opcional: inclui chaves estrangeiras na serialização
 
+
 # Instancia os esquemas para uso
  # Para uma lista de admins
 
@@ -39,6 +40,7 @@ class AvaliacaoSchema(ma.SQLAlchemyAutoSchema):
         model = Avaliacao
         load_instance = True
         include_fk = True # Importante para incluir livro_id e usuario_id
+        dump_only = ("usuario_id", "data")
 
 
 # Instancias

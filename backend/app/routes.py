@@ -8,7 +8,7 @@ from .schemas import (
     avaliacao_schema, avaliacoes_schema
 )
 from marshmallow import ValidationError
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 main = Blueprint('main', __name__)
 
@@ -175,23 +175,32 @@ def get_avaliacoes():
     return avaliacoes_schema.dump(avaliacoes)
 
 @main.route('/avaliacoes', methods=['POST'])
+@jwt_required() 
 def criar_avaliacao():
-    json_data = request.get_json()
+    usuario_id_atual = get_jwt_identity()
+    
+    dados = request.get_json()
+    
     try:
-        nova_avaliacao = avaliacao_schema.load(json_data)
+        nova_avaliacao = avaliacao_schema.load(dados)
     except ValidationError as err:
         return jsonify(err.messages), 400
-
+    
+    nova_avaliacao.usuario_id = usuario_id_atual
+    
     db.session.add(nova_avaliacao)
     db.session.commit()
-    return jsonify({"message": "Avaliação criada com sucesso!", "avaliacao": avaliacao_schema.dump(nova_avaliacao)}), 201
+    
+    return jsonify({
+        "message": "Avaliação criada com sucesso!", 
+        "avaliacao": avaliacao_schema.dump(nova_avaliacao)
+    }), 201
 
 @main.route('/avaliacoes/<int:avaliacao_id>', methods=['PUT'])
 def update_avaliacao(avaliacao_id):
     avaliacao = Avaliacao.query.get_or_404(avaliacao_id)
     json_data = request.get_json()
     try:
-        # Atualizamos apenas comentario e estrelas
         avaliacao_atualizada = avaliacao_schema.load(json_data, instance=avaliacao, partial=True, only=('comentario', 'estrelas'))
     except ValidationError as err:
         return jsonify(err.messages), 400
