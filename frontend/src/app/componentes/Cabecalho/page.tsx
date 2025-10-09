@@ -1,6 +1,6 @@
 import "./Cabecalho.css";
 import BotaoCabecalho from "../BotaoCabecalho/page";
-import Pesquisa from "../Pesquisa/page";
+
 const Cabecalho = () => {
   // JSX
   return (
@@ -10,7 +10,7 @@ const Cabecalho = () => {
         <BotaoCabecalho></BotaoCabecalho>
       </header>
       <div>
-        <Pesquisa></Pesquisa>
+       
       </div>
     </div>
   );
