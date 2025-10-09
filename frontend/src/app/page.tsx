@@ -1,7 +1,7 @@
 import Cabecalho from "./componentes/Cabecalho/page";
 import Corpo from "./componentes/Corpo/page";
 import Rodape from "./componentes/Rodape/page";
-import "./componentes/fundoPag/Fundo.css";
+import "../../public/fundoPag/Fundo.css";
 
 
 function App() {
