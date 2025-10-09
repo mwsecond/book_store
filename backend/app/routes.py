@@ -8,6 +8,7 @@ from .schemas import (
     avaliacao_schema, avaliacoes_schema
 )
 from marshmallow import ValidationError
+from flask_jwt_extended import create_access_token
 
 main = Blueprint('main', __name__)
 
@@ -220,8 +221,8 @@ def login_usuario():
 
     # Verifica se o usuário existe E se a senha enviada corresponde ao hash salvo
     if usuario and bcrypt.check_password_hash(usuario.senha, senha):
-        # Login bem-sucedido! (Por agora, apenas retornamos uma mensagem)
-        return jsonify({"message": f"Login de {usuario.nome} realizado com sucesso!"})
+        access_token = create_access_token(identity=usuario.id)
+        return jsonify(access_token=access_token)
     
     # Se o usuário não existe ou a senha está incorreta
     return jsonify({"message": "Credenciais inválidas"}), 401
