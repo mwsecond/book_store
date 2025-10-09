@@ -1,6 +1,6 @@
 # app/__init__.py
 
-from flask import Flask
+from flask import Flask, app
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_bcrypt import Bcrypt
@@ -13,11 +13,12 @@ jwt = JWTManager()
 
 def create_app():
     app = Flask(__name__)
+    
 
     # --- Configuração do Banco de Dados ---
     # (sua configuração continua a mesma)
     USER = 'root'
-    PASSWORD = '1235' 
+    PASSWORD = '' 
     HOST = 'localhost'
     DATABASE = 'book_store'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+mysqlconnector://{USER}:{PASSWORD}@{HOST}/{DATABASE}'

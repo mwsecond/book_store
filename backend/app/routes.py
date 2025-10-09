@@ -1,3 +1,4 @@
+
 from flask import request, jsonify, Blueprint
 from . import db, bcrypt
 from .models import Admin, Usuario, Livro, Avaliacao

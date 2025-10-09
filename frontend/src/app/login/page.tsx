@@ -1,16 +1,62 @@
-import "./login.css"
+"use client";
+import "./login.css";
 import Link from "next/link";
+import { useState } from "react";
 
 const TelaLogin = () => {
+  const [erro, setErro] = useState("");
+  const [carregando, setCarregando] = useState(false);
+
+  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setErro("");
+    setCarregando(true);
+
+    const email = (event.currentTarget.email as HTMLInputElement).value;
+    const senha = (event.currentTarget.password as HTMLInputElement).value;
+
+    try {
+      const response = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, senha }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // ✅ Login bem-sucedido
+        console.log("Token JWT:", data.access_token);
+
+        // Armazena o token no localStorage para autenticação posterior
+        localStorage.setItem("token", data.access_token);
+
+        // Redireciona o usuário para a página de perfil (por exemplo)
+        window.location.href = "/perfil";
+      } else {
+        // ❌ Erro de login
+        setErro(data.message || "Erro ao fazer login");
+      }
+    } catch (err) {
+      console.error(err);
+      setErro("Erro de conexão com o servidor");
+    } finally {
+      setCarregando(false);
+    }
+  };
+
   return (
     <div className="container">
       <div className="cabecalho-login">
         <Link href="/">
-          <img src="./Cabecalho_img/logoescrito.png" alt="Logo" />
+          <img src="/Cabecalho_img/logoescrito.png" alt="Logo" />
         </Link>
       </div>
+
       <div className="tela-login-container">
-        <form className="folha">
+        <form className="folha" onSubmit={handleLogin}>
           <h3>Login</h3>
 
           <div className="campo">
@@ -28,17 +74,19 @@ const TelaLogin = () => {
             <input type="password" id="password" required />
           </div>
 
-          <button type="submit" className="botao-login">
-            Entrar
+          <button type="submit" className="botao-login" disabled={carregando}>
+            {carregando ? "Entrando..." : "Entrar"}
           </button>
-        <p className="texto-cadastro">
-          Não possui conta?{" "}
-          <a href="/cadastro" className="link-cadastro">
-            Cadastre-se
-          </a>
-        </p>
-        </form>
 
+          {erro && <p className="erro">{erro}</p>}
+
+          <p className="texto-cadastro">
+            Não possui conta?{" "}
+            <a href="/cadastro" className="link-cadastro">
+              Cadastre-se
+            </a>
+          </p>
+        </form>
       </div>
     </div>
   );
