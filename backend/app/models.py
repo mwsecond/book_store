@@ -42,7 +42,7 @@ class Livro(db.Model):
 class Avaliacao(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     comentario = db.Column(db.Text)
-    estrelas = db.Column(db.Integer)
+    estrelas = db.Column(db.Integer, nullable=False)
     data = db.Column(db.DateTime, default=db.func.current_timestamp())
     livro_id = db.Column(db.Integer, db.ForeignKey('livro.id'), nullable=False)
     usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
