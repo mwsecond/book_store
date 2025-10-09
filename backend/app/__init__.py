@@ -3,9 +3,13 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from flask_bcrypt import Bcrypt
+from flask_jwt_extended import JWTManager
 
 db = SQLAlchemy()
 ma = Marshmallow()
+bcrypt = Bcrypt()
+jwt = JWTManager()
 
 def create_app():
     app = Flask(__name__)
@@ -19,8 +23,12 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+mysqlconnector://{USER}:{PASSWORD}@{HOST}/{DATABASE}'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+    app.config["JWT_SECRET_KEY"] = "bookstoreisverycool"
+
     db.init_app(app)
     ma.init_app(app)
+    bcrypt.init_app(app)
+    jwt.init_app(app)
 
     # Importa o Blueprint do arquivo de rotas
     from .routes import main as main_blueprint
