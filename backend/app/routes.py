@@ -230,7 +230,7 @@ def login_usuario():
 
     # Verifica se o usuário existe E se a senha enviada corresponde ao hash salvo
     if usuario and bcrypt.check_password_hash(usuario.senha, senha):
-        access_token = create_access_token(identity=usuario.id)
+        access_token = create_access_token(identity=str(usuario.id))
         return jsonify(access_token=access_token)
     
     # Se o usuário não existe ou a senha está incorreta
