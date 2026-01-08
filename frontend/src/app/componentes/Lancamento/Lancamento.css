@@ -1,7 +1,8 @@
 .cards-container {
   padding: 20px; /* espaçamento em volta de todos os cards */
   display: flex;
-  flex-wrap: wrap;
+    flex-wrap: wrap;
+  justify-content: space-between;
   gap: 20px; /* espaço entre os cards */
 }
 
@@ -21,6 +22,8 @@
     color: white;
     font-size:larger;
     font-weight: bold;
+    align-items: center;
+
 }
 .img-card{
     background-color: white;
@@ -31,5 +34,10 @@
     font-size: 30px;
     justify-content: center;
     color: black;
-    
+}
+.descricao{
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    flex-direction: column;
 }

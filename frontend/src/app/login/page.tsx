@@ -34,7 +34,7 @@ const TelaLogin = () => {
         localStorage.setItem("token", data.access_token);
 
         // Redireciona o usuário para a página de perfil (por exemplo)
-        window.location.href = "/perfil";
+        window.location.href = "/";
       } else {
         // ❌ Erro de login
         setErro(data.message || "Erro ao fazer login");

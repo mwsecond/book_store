@@ -27,7 +27,7 @@
               type="search"
               name="pesq"
               id="default-search"
-              placeholder="Informe título"
+              placeholder="Pesquise aqui"
               required
               className="pesquisa-input"
             />

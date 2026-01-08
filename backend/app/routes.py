@@ -148,6 +148,19 @@ def criar_livro():
     db.session.add(novo_livro)
     db.session.commit()
     return jsonify({"message": "Livro criado com sucesso!", "livro": livro_schema.dump(novo_livro)}), 201
+@main.route("/livros", methods=["GET"])
+def listar_livros():
+    livros = Livro.query.all()
+    resultado = []
+    for livro in livros:
+        resultado.append({
+            "id": livro.id,
+            "titulo": livro.titulo,
+            "autor": livro.autor,
+            "sinopse": livro.sinopse,
+            "imagem": livro.imagem  # opcional
+        })
+    return jsonify(resultado)
 
 @main.route('/livros/<int:livro_id>', methods=['PUT'])
 def update_livro(livro_id):
@@ -226,4 +239,31 @@ def login_usuario():
         return jsonify(access_token=access_token)
     
     # Se o usuário não existe ou a senha está incorreta
+    return jsonify({"message": "Credenciais inválidas"}), 401
+@main.route('/login_admin', methods=['POST'])
+def login_admin():
+    json_data = request.get_json()
+    email = json_data.get('email')
+    senha = json_data.get('senha')
+
+    # Validação simples
+    if not email or not senha:
+        return jsonify({"message": "Email e senha são obrigatórios"}), 400
+
+    # Busca o admin pelo email no banco
+    admin = Admin.query.filter_by(email=email).first()
+
+    # Verifica se o admin existe e a senha confere
+    if admin and bcrypt.check_password_hash(admin.senha, senha):
+        access_token = create_access_token(identity={"id": admin.id, "tipo": "admin"})
+        return jsonify({
+            "message": "Login de administrador realizado com sucesso!",
+            "access_token": access_token,
+            "admin": {
+                "id": admin.id,
+                "nome": admin.nome,
+                "email": admin.email
+            }
+        }), 200
+
     return jsonify({"message": "Credenciais inválidas"}), 401

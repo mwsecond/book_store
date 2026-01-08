@@ -1,5 +1,5 @@
 # app/__init__.py
-
+from flask_cors import CORS
 from flask import Flask, app
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
@@ -13,12 +13,12 @@ jwt = JWTManager()
 
 def create_app():
     app = Flask(__name__)
-    
+    CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
     # --- Configuração do Banco de Dados ---
     # (sua configuração continua a mesma)
     USER = 'root'
-    PASSWORD = '' 
+    PASSWORD = '131412' 
     HOST = 'localhost'
     DATABASE = 'book_store'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+mysqlconnector://{USER}:{PASSWORD}@{HOST}/{DATABASE}'

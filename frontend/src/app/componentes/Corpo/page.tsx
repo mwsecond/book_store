@@ -5,8 +5,8 @@ import Pesquisa from "../Pesquisa/page";
 const Corpo = () => {
     return(
         <div>
-            <Pesquisa></Pesquisa>
             <Carrossel></Carrossel>
+            <Pesquisa></Pesquisa>
             <Lancamento></Lancamento>
         </div>
 

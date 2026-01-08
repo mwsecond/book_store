@@ -1,13 +1,14 @@
 import "./Cabecalho.css";
-import BotaoCabecalho from "../BotaoCabecalho/page";
+import Link from "next/link";
 
 const Cabecalho = () => {
   // JSX
   return (
     <div>
       <header className="cabecalho">
-        <img src="./Cabecalho_img/logoescrito.png" alt="" />
-        <BotaoCabecalho></BotaoCabecalho>
+        <Link href="/">
+          <img src="/Cabecalho_img/logoescrito.png" alt="Logo" />
+        </Link>
       </header>
       <div>
        

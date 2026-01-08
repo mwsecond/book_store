@@ -1,6 +1,6 @@
 .cabecalho {
     display: flex;
-    justify-content: space-between;
+    justify-content:center;
     align-items: center; /* impede que o botão estique */
     padding: 10px 90px 10px;
     background: linear-gradient(
@@ -12,5 +12,5 @@
     min-height: 90px;
 }
 .cabecalho img {
- height: 90px
+ height: 120px
 }
