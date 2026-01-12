@@ -1,9 +1,11 @@
 "use client";
 import "./login.css";
-import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const TelaLogin = () => {
+  const router = useRouter();
+
   const [erro, setErro] = useState("");
   const [carregando, setCarregando] = useState(false);
 
@@ -16,31 +18,26 @@ const TelaLogin = () => {
     const senha = (event.currentTarget.password as HTMLInputElement).value;
 
     try {
-      const response = await fetch("http://localhost:5000/login", {
+      const response = await fetch("http://localhost:5000/login_admin", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, senha }),
       });
 
       const data = await response.json();
 
-      if (response.ok) {
-        // ✅ Login bem-sucedido
-        console.log("Token JWT:", data.access_token);
-
-        // Armazena o token no localStorage para autenticação posterior
-        localStorage.setItem("token", data.access_token);
-
-        // Redireciona o usuário para a página de perfil (por exemplo)
-        window.location.href = "/";
-      } else {
-        // ❌ Erro de login
-        setErro(data.message || "Erro ao fazer login");
+      if (!response.ok) {
+        setErro(data.message || "Credenciais inválidas");
+        return;
       }
+
+      // ✅ Salva token
+      localStorage.setItem("token", data.access_token);
+
+      // ✅ Redireciona para painel admin
+      router.push("/AdminPage");
+
     } catch (err) {
-      console.error(err);
       setErro("Erro de conexão com o servidor");
     } finally {
       setCarregando(false);

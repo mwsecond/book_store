@@ -6,9 +6,7 @@ const Cabecalho = () => {
   return (
     <div>
       <header className="cabecalho">
-        <Link href="/">
-          <img src="/Cabecalho_img/logoescrito.png" alt="Logo" />
-        </Link>
+        <h3>BOOK_STORE</h3>
       </header>
       <div>
        

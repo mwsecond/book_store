@@ -7,7 +7,7 @@ const Corpo = () => {
         <div>
             <Carrossel></Carrossel>
             <Pesquisa></Pesquisa>
-            <Lancamento></Lancamento>
+            <Lancamento></Lancamento> 
         </div>
 
     );
