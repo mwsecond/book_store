@@ -20,24 +20,25 @@ const TelaLogin = () => {
     try {
       const response = await fetch("http://localhost:5000/login_admin", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ email, senha }),
       });
 
       const data = await response.json();
 
-      if (!response.ok) {
-        setErro(data.message || "Credenciais inválidas");
-        return;
+      if (response.ok) {
+        // ✅ Login bem-sucedido
+        localStorage.setItem("token", data.access_token);
+
+        // 👉 Redireciona para o painel admin
+        router.push("/AdminPage");
+      } else {
+        setErro(data.message || "Erro ao fazer login");
       }
-
-      // ✅ Salva token
-      localStorage.setItem("token", data.access_token);
-
-      // ✅ Redireciona para painel admin
-      router.push("/AdminPage");
-
     } catch (err) {
+      console.error(err);
       setErro("Erro de conexão com o servidor");
     } finally {
       setCarregando(false);
@@ -70,7 +71,6 @@ const TelaLogin = () => {
           </button>
 
           {erro && <p className="erro">{erro}</p>}
-
         </form>
       </div>
     </div>

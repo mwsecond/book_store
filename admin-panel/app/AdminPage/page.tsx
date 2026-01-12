@@ -11,13 +11,14 @@ export default function AdminPage() {
   const [imagem, setImagem] = useState("");
   const [mensagem, setMensagem] = useState("");
 
-  // Protege a rota
+  // 🔐 Protege a rota
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (!token) router.push("/login");
+    if (!token) {
+      router.push("/login");
+    }
   }, [router]);
 
-  // Envia dados para o backend
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -29,7 +30,7 @@ export default function AdminPage() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/livros", {
+      const response = await fetch("http://127.0.0.1:5000/livros", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -55,7 +56,6 @@ export default function AdminPage() {
       setAutor("");
       setSinopse("");
       setImagem("");
-
     } catch (error) {
       setMensagem("Erro de conexão com o servidor");
     }
@@ -68,22 +68,25 @@ export default function AdminPage() {
       <form onSubmit={handleSubmit}>
         <div>
           <label>Título</label>
-          <input value={titulo} onChange={e => setTitulo(e.target.value)} />
+          <input value={titulo} onChange={(e) => setTitulo(e.target.value)} />
         </div>
 
         <div>
           <label>Autor</label>
-          <input value={autor} onChange={e => setAutor(e.target.value)} />
+          <input value={autor} onChange={(e) => setAutor(e.target.value)} />
         </div>
 
         <div>
           <label>Sinopse</label>
-          <textarea value={sinopse} onChange={e => setSinopse(e.target.value)} />
+          <textarea
+            value={sinopse}
+            onChange={(e) => setSinopse(e.target.value)}
+          />
         </div>
 
         <div>
           <label>Imagem (URL)</label>
-          <input value={imagem} onChange={e => setImagem(e.target.value)} />
+          <input value={imagem} onChange={(e) => setImagem(e.target.value)} />
         </div>
 
         <button type="submit">Cadastrar Livro</button>

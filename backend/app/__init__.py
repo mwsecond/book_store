@@ -14,7 +14,12 @@ jwt = JWTManager()
 
 def create_app():
     app = Flask(__name__)
-    CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+    CORS(
+    app,
+    resources={r"/*": {"origins": "http://localhost:3000"}},
+    methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization"]
+)
 
     # --- Configuração do Banco de Dados ---
     # (sua configuração continua a mesma)

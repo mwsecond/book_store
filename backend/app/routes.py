@@ -145,7 +145,6 @@ def criar_livro():
     except ValidationError as err:
         return jsonify(err.messages), 400
     
-    
     db.session.add(novo_livro)
     db.session.commit()
     return jsonify({"message": "Livro criado com sucesso!", "livro": livro_schema.dump(novo_livro)}), 201
@@ -253,10 +252,8 @@ def login_admin():
 
     # Verifica se o admin existe e a senha confere
     if admin and bcrypt.check_password_hash(admin.senha, senha):
-        access_token = access_token = create_access_token(
-    identity=str(admin.id),
-    additional_claims={"tipo": "admin"}
-)({
+        access_token = create_access_token(identity={"id": admin.id, "tipo": "admin"})
+        return jsonify({
             "message": "Login de administrador realizado com sucesso!",
             "access_token": access_token,
             "admin": {
@@ -267,9 +264,7 @@ def login_admin():
         }), 200
 
     return jsonify({"message": "Credenciais inválidas"}), 401
-@main.route('/teste-token', methods=['POST'])
-@jwt_required()
-def teste_token():
+@main.route('/teste', methods=['GET'])
+def teste():
     return {"ok": True}
-
 
